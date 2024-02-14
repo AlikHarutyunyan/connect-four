@@ -36,3 +36,134 @@
     transform: rotate(360deg);
   }
 }
+
+.parentDiv{
+  float: left;
+  border: 2px solid darkblue;
+  background-color: darkblue;
+}
+
+.childDivs{
+  border: 2px outset blue;
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+  color: red;
+  background-color: aliceblue;
+}
+
+.parentDiv:hover{
+  background-color: mediumblue;
+  cursor: pointer;
+}
+
+#board-size-selector{
+  padding: 5px;
+  width: 34px;
+  cursor: pointer;
+  background: darkblue;
+  color: white;
+  border: 1px solid white;
+}
+
+.red-circle{
+  background-color: red;
+}
+
+.yellow-circle{
+  background-color: yellow;
+}
+
+.game-board{
+  width: fit-content;
+  margin: 0 auto;
+  overflow: auto;
+  box-shadow: 3px 5px 95px 310px lightblue;
+}
+
+#board-size-text{
+  text-align: center;
+  font-size: 29px;
+  font-family: cursive;
+  font-weight: bold;
+}
+
+#board-size-button-container{
+  width: fit-content;
+  margin: 0 auto;
+}
+
+#start-button{
+  padding: 5px;
+  color: white;
+  border: none;
+  background: darkblue;
+  font-size: 15px;
+  border-radius: 95%;
+  cursor: pointer;
+}
+
+#start-button:hover{
+  outline:2px solid white;
+}
+
+body{
+  background-color:beige;
+}
+
+#game-over-container{
+  font-size: 45px;
+  padding: 50px;
+  text-align: center;
+  width: fit-content;
+  margin: auto;
+  font-weight: bold;
+  font-family: monospace;
+  background-color: lightblue;
+  text-shadow: 2px 4px beige;
+}
+
+#restart-button{
+  display: block;
+  margin: 10px auto;
+  font-size: 30px;
+  font-family: cursive;
+  padding: 15px;
+  border-radius: 80%;
+  cursor: pointer;
+  background-color: antiquewhite;
+}
+
+#restart-button:hover{
+  border-color: white;
+  color: darkblue;
+}
+
+.opponent-container{
+  margin-left: 10px;
+  margin-right: 10px;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.opponent-container img:hover{
+  outline: 2px solid white;
+}
+
+.opponent-container img {
+  display: block;
+  width: 90px;
+  border-radius: 100%;
+  margin: auto;
+}
+
+.opponent-container p {
+  margin: 0;
+  text-align: center;
+  padding: 0;
+}
+
+#opponent-selector-container{
+  margin: 5px auto;
+  width: fit-content;
+}

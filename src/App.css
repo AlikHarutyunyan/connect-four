@@ -49,7 +49,7 @@
   height: 40px;
   border-radius: 100%;
   color: red;
-  background-color: aliceblue;
+  background-color: beige;
 }
 
 .parentDiv:hover{
@@ -64,6 +64,7 @@
   background: darkblue;
   color: white;
   border: 1px solid white;
+  margin-right: 3px;
 }
 
 .red-circle{
@@ -131,7 +132,7 @@ body{
   padding: 15px;
   border-radius: 80%;
   cursor: pointer;
-  background-color: antiquewhite;
+  background-color: beige;
 }
 
 #restart-button:hover{
@@ -147,7 +148,7 @@ body{
 }
 
 .opponent-container img:hover{
-  outline: 2px solid white;
+  outline: 2px solid darkblue;
 }
 
 .opponent-container img {
@@ -166,4 +167,51 @@ body{
 #opponent-selector-container{
   margin: 5px auto;
   width: fit-content;
+}
+
+.opponent-list{
+  margin: 0 auto;
+  width: fit-content;
+}
+
+.opponent-description {
+  display: none;
+}
+
+.opponent-list:hover ~ .opponent-description{
+  display: block;
+}
+
+.scoreboard-container {
+  background-color: darkblue;
+  padding: 15px;
+  border-radius: 10px;
+  margin: 20px auto;
+  max-width: 400px;
+}
+
+.scoreboard-title {
+  color: beige;
+  text-align: center;
+  margin:0;
+}
+
+.scoreboard-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.scoreboard-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+
+.player-name {
+  color: beige;
+  font-weight: bold;
+}
+
+.player-score {
+  color: beige;
 }

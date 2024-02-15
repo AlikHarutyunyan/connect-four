@@ -4,6 +4,7 @@ import {GameBoard} from "./GameBoard";
 import StartMenu from "./StartMenu";
 import * as Constants from "./Constants";
 import OpponentChoose from "./OpponentChoose";
+import ScoreBoard from "./ScoreBoard";
 
 class App extends React.Component{
   state = {
@@ -15,7 +16,13 @@ class App extends React.Component{
       winner:null,
       opponent:null,
       moveAvailable:false,
-      opponentChooseScreen:false
+      opponentChooseScreen:false,
+      points : {
+          firstPlayer: 0,
+          secondPlayer: 0,
+          mrRandom: 0,
+          connect4Bot:0
+      }
   }
 
   changeBoardSize = (event) => {
@@ -30,7 +37,7 @@ class App extends React.Component{
   }
 
   handleOpponentChoose = (selected) => {
-      if(selected === Constants.CONNECT_FOUR_BOT && this.state.boardSize !== 7+""){
+      if(selected === Constants.CONNECT_FOUR_BOT && this.state.boardSize !== Constants.CONNECT_FOUR_BOT_BOARD_SIZE+""){
           alert("The bot can only play on 7x7 board!")
       }else{
           this.setState({
@@ -52,8 +59,6 @@ class App extends React.Component{
       })
   }
 
-
-
   create2dArray = (val) =>{
       const array = [];
       for (let i = 0; i < val; i++) {
@@ -65,17 +70,13 @@ class App extends React.Component{
       }
       return array;
   }
-     startGame = () =>{
-      this.setState({
-          gameStarted:true,
-          moveAvailable:true
-      })
-    }
 
     nextScreen = () =>{
-        this.setState({
-            opponentChooseScreen:true
-        })
+      if(this.state.boardSize !== "") {
+          this.setState({
+              opponentChooseScreen: true
+          })
+      }
     }
 
     handleGameOver = (column, row,isBot,botColumn,botRow) => {
@@ -92,39 +93,35 @@ class App extends React.Component{
     }
 
     checkForWinner = (column, row, isBot) =>{
-        return this.checkForVerticalWinner(column, row, isBot) || this.checkForHorizontalWinner(column, row, isBot)
-            || this.checkForDiagonalWinner(column, row, isBot);
+        const player = isBot ? !this.state.isFirstPlayer ? Constants.FIRST_PLAYER : Constants.SECOND_PLAYER : this.state.isFirstPlayer ? Constants.FIRST_PLAYER : Constants.SECOND_PLAYER;
+        return this.checkForVerticalWinner(column, row, player) || this.checkForHorizontalWinner(column, row, player)
+            || this.checkForDiagonalWinner(column, row, player);
     }
 
-    checkForVerticalWinner = (column, row,isBot) => {
+    checkForVerticalWinner = (column, row, player) => {
         let count = 0;
-        const num = isBot ? !this.state.isFirstPlayer ? 1 : 2 : this.state.isFirstPlayer ? 1 : 2;
         for (let i = row; i<this.state.gameArray[column].length; i++) {
-            count = this.updateCountSequence(column,i,num,count,isBot)
+            count = this.updateCountSequence(column,i,player,count)
             if(count === Constants.WINNING_COMBO){
-                console.log("vertical")
                 return true
             }
         }
         return false;
     }
 
-    checkForHorizontalWinner = (column, row,isBot) => {
-      let count = 0;
-      const num = isBot ? !this.state.isFirstPlayer ? 1 : 2 : this.state.isFirstPlayer ? 1 : 2;
-        for (let j = 0; j < this.state.gameArray.length; j++) {
-            count = this.updateCountSequence(j,row,num,count,isBot)
-            if(count === Constants.WINNING_COMBO){
-                console.log("horizontal")
-                return true
-            }
-        }
-        return false;
-    }
-
-    checkForDiagonalWinner = (column, row,isBot) => {
+    checkForHorizontalWinner = (column, row, player) => {
         let count = 0;
-        const num = isBot ? !this.state.isFirstPlayer ? 1 : 2 : this.state.isFirstPlayer ? 1 : 2;
+        for (let j = 0; j < this.state.gameArray.length; j++) {
+            count = this.updateCountSequence(j,row,player,count)
+            if(count === Constants.WINNING_COMBO){
+                return true
+            }
+        }
+        return false;
+    }
+
+    checkForDiagonalWinner = (column, row, player) => {
+        let count = 0;
         let newRow = row - column;
         let newColumn = 0;
         if(column > row){
@@ -132,9 +129,8 @@ class App extends React.Component{
             newRow = 0;
         }
         while(newColumn !== this.state.gameArray.length && newRow !== this.state.gameArray.length){
-            count = this.updateCountSequence(newColumn,newRow,num,count,isBot);
+            count = this.updateCountSequence(newColumn,newRow,player,count);
             if(count === Constants.WINNING_COMBO){
-                console.log("diagonal1")
                 return true;
             }
             newColumn++;
@@ -145,9 +141,8 @@ class App extends React.Component{
         newRow = row - differenceFromEndForColumn;
         count = 0;
         while(newColumn >= 0 && newRow !== this.state.gameArray.length){
-            count = this.updateCountSequence(newColumn,newRow,num,count,isBot);
+            count = this.updateCountSequence(newColumn,newRow,player,count);
             if(count === Constants.WINNING_COMBO){
-                console.log("diagonal2")
                 return true;
             }
             newColumn--;
@@ -156,14 +151,21 @@ class App extends React.Component{
         return false;
     }
 
-    updateCountSequence = (newColumn, newRow, num, count,isBot) =>{
-        if(this.state.gameArray[newColumn][newRow] === num){
+    updateCountSequence = (newColumn, newRow, player, count) =>{
+        if(this.state.gameArray[newColumn][newRow] === player){
             count++;
-            if(count === 3){
+            if(count === Constants.WINNING_COMBO){
                 this.setState({
-                    winner: isBot? !this.state.isFirstPlayer ? 1 : 2 : this.state.isFirstPlayer ? 1 : 2
+                    winner: player
                 })
-                return 3;
+                if(player === Constants.FIRST_PLAYER && this.state.opponent !== Constants.TWO_PLAYER){
+                    if(this.state.opponent === Constants.MR_RANDOM){
+                        this.state.points.mrRandom--;
+                    }else{
+                        this.state.points.connect4Bot--;
+                    }
+                }
+                return Constants.WINNING_COMBO;
             }else{
                 return count;
             }
@@ -172,13 +174,23 @@ class App extends React.Component{
     }
 
 
-
-    handleGameArrayUpdate = (updatedGameArray,column,row) => {
+    handleGameArrayUpdate = (updatedGameArray) => {
+      this.state.points.firstPlayer++;
         if(this.state.opponent === Constants.MR_RANDOM || this.state.opponent === Constants.CONNECT_FOUR_BOT){
             this.setState({
                 gameArray: updatedGameArray,
             })
+            switch (this.state.opponent){
+                case Constants.MR_RANDOM:{
+                    this.state.points.mrRandom++;
+                    break;
+                }
+                default:{
+                    this.state.points.connect4Bot++;
+                }
+            }
         }else{
+            this.state.points.secondPlayer++;
             this.setState({
                 gameArray: updatedGameArray,
                 isFirstPlayer : !this.state.isFirstPlayer
@@ -201,7 +213,6 @@ class App extends React.Component{
   }
 
   render() {
-      console.log("got here3" + this.state.isFirstPlayer)
       const winner =  <div id={"game-over-container"}> {this.state.winner === 1? "RED WON!" : "YELLOW WON!"} </div>;
       const divs = <GameBoard myBoardSize = {this.state.boardSize}
                               gameArray={this.state.gameArray}
@@ -211,7 +222,6 @@ class App extends React.Component{
                               handleGameOver={this.handleGameOver}
                               toggleMoves ={this.toggleMoves}
                               opponent = {this.state.opponent}/>;
-    //console.log(this.state.gameArray)
       return (
         <div>
             {!this.state.gameStarted && !this.state.opponentChooseScreen &&
@@ -224,13 +234,10 @@ class App extends React.Component{
           </div>
             {this.state.gameOver && winner}
             {(this.state.opponentChooseScreen||this.state.gameStarted) && <button id="restart-button" onClick={this.handleGameRestart}>Restart</button>}
+            <ScoreBoard points={this.state.points} />
         </div>
-
-
     );
   }
-
 }
-
 
 export default App;

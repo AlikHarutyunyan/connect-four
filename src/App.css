@@ -36,6 +36,9 @@
     transform: rotate(360deg);
   }
 }
+*{
+  font-family: cursive;
+}
 
 .parentDiv{
   float: left;
@@ -122,6 +125,14 @@ body{
   font-family: monospace;
   background-color: lightblue;
   text-shadow: 2px 4px beige;
+}
+
+#opponent-choose-text{
+  text-align: center;
+  font-size: 18px;
+  font-family: cursive;
+  font-weight: bold;
+  margin: 0 0 5px 0;
 }
 
 #restart-button{

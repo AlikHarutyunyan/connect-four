@@ -23,10 +23,12 @@ class OpponentChoose extends React.Component {
     render() {
         return (
             <div id="opponent-selector-container">
+                <p id="opponent-choose-text">Choose your opponent</p>
                 <div className={"opponent-list"}>
                     {opponents.map(opponent => (
-                        <div onMouseOver={() => this.handleHover(opponent.id)} className="opponent-container" key={opponent.id} onClick={() => this.props.startGame(opponent.id)}>
-                            <img src={opponent.image} alt={opponent.name} />
+                        <div onMouseOver={() => this.handleHover(opponent.id)} className="opponent-container"
+                             key={opponent.id} onClick={() => this.props.startGame(opponent.id)}>
+                            <img src={opponent.image} alt={opponent.name}/>
                             <p>{opponent.name}</p>
                         </div>
                     ))}

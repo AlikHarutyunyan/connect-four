@@ -114,7 +114,7 @@ body{
 
 #game-over-container{
   font-size: 45px;
-  padding: 50px;
+  padding: 25px 25px 15px 25px;
   text-align: center;
   width: fit-content;
   margin: auto;

@@ -3,23 +3,27 @@ import * as Constants from "./Constants";
 
 function createGameBoard(props){
     const divs = [];
+    const createDiv = (i, j, className) => (
+        <div onClick={() => makeMove(props.gameArray, "" + i + j, props)} className={className} key={"" + i + j}></div>
+    );
     for (let i = 0; i < props.myBoardSize; i++) {
         const childDivs = [];
         for (let j = 0; j < props.myBoardSize; j++) {
-            if(props.gameArray[i][j] === Constants.FIRST_PLAYER){
-                childDivs.push(<div onClick={()=>makeMove(props.gameArray,""+i+j,props)} className={`red-circle childDivs`} key={""+i+j}></div>);
-            }else if(props.gameArray[i][j] === Constants.SECOND_PLAYER){
-                childDivs.push(<div onClick={()=>makeMove(props.gameArray,""+i+j,props)} className={`yellow-circle childDivs`} key={""+i+j}></div>);
-            }else{
-                childDivs.push(<div onClick={()=>makeMove(props.gameArray,""+i+j,props)} className={`childDivs`} key={""+i+j}></div>);
+            let className = "childDivs";
+            if (props.gameArray[i][j] === Constants.FIRST_PLAYER) {
+                className += " red-circle";
+            } else if (props.gameArray[i][j] === Constants.SECOND_PLAYER) {
+                className += " yellow-circle";
             }
+            childDivs.push(createDiv(i, j, className));
         }
         divs.push(<div className={"parentDiv"} key={i}> {childDivs} </div>);
     }
     return divs;
 }
 
-function makeMove(arr, x, props) {
+
+const makeMove = (arr, x, props) => {
     props.toggleMoves(false)
     if (props.moveAvailable) {
         let column = x[Constants.COLUMN_INDEX];

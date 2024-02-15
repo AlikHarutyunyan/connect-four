@@ -7,3 +7,5 @@ export const FIRST_PLAYER = 1;
 export const SECOND_PLAYER = 2;
 export const COLUMN_INDEX = 0;
 export const CONNECT_FOUR_BOT_BOARD_SIZE = 7;
+export const MAX_BOARD_SIZE = 10;
+export const MIN_BOARD_SIZE = 6;

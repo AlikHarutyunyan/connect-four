@@ -175,7 +175,9 @@ class App extends React.Component{
 
 
     handleGameArrayUpdate = (updatedGameArray) => {
-      this.state.points.firstPlayer++;
+      if(this.state.isFirstPlayer) {
+          this.state.points.firstPlayer++;
+      }
         if(this.state.opponent === Constants.MR_RANDOM || this.state.opponent === Constants.CONNECT_FOUR_BOT){
             this.setState({
                 gameArray: updatedGameArray,
@@ -190,7 +192,9 @@ class App extends React.Component{
                 }
             }
         }else{
-            this.state.points.secondPlayer++;
+            if(!this.state.isFirstPlayer) {
+                this.state.points.secondPlayer++;
+            }
             this.setState({
                 gameArray: updatedGameArray,
                 isFirstPlayer : !this.state.isFirstPlayer

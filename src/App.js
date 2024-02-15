@@ -86,7 +86,6 @@ class App extends React.Component{
             result = this.checkForWinner(column, row, false) || this.checkForWinner(botColumn, botRow, true);
 
             setTimeout(() => {
-                console.log(this.state.winner)
                 if (result && this.state.winner === Constants.FIRST_PLAYER) {
                     const arr = {...this.state.gameArray}
                     arr[botColumn][botRow] = null

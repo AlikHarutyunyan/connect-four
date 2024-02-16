@@ -43,7 +43,8 @@ const makeMove = (arr, x, props) => {
                         break;
                     }
                     case Constants.MR_RANDOM : {
-                        botColumn = Math.floor(Math.random() * countFreeColumns(arr).length);
+                        const freeColumnsArray = returnFreeColumns(arr);
+                        botColumn = freeColumnsArray[Math.floor(Math.random() * freeColumnsArray.length)];
                         performUpdates(props,arr,column,i,botColumn,calculateRow(arr, botColumn))
                         break;
                     }
@@ -59,7 +60,7 @@ const makeMove = (arr, x, props) => {
     }
 }
 
-const countFreeColumns = (arr) =>{
+const returnFreeColumns = (arr) =>{
     const columnsWithFreeSpace = [];
     for (let columnIndex = 0; columnIndex < arr[0].length; columnIndex++) {
         let hasNull = false;

@@ -3,7 +3,7 @@ import React from "react";
 function ScoreBoard(props){
     return (
         <div className="scoreboard-container">
-            <h2 className="scoreboard-title">Scoreboard</h2>
+            <h2 className="scoreboard-title">Circles dropped</h2>
             <ul className="scoreboard-list">
                 {Object.entries(props.points).map(([player, score]) => (
                     <li key={player} className="scoreboard-item">

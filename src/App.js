@@ -175,7 +175,7 @@ class App extends React.Component{
                         points:{
                             firstPlayer:prevState.points.firstPlayer,
                             secondPlayer:prevState.points.secondPlayer,
-                            mrRandom:isMrRandom ? prevState.points.mrRandom-1:prevState.state.points.mrRandom,
+                            mrRandom:isMrRandom ? prevState.points.mrRandom-1:prevState.points.mrRandom,
                             connect4Bot:isMrRandom ? prevState.points.connect4Bot:prevState.points.connect4Bot-1
                         }
                     }))
